@@ -32,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'post_title',
             'post_description:ntext',
             'author_id',
+            'password',
         ],
     ]) ?>
 

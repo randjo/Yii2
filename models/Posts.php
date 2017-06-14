@@ -14,6 +14,7 @@ use Yii;
  */
 class Posts extends \yii\db\ActiveRecord
 {
+    public $password_repeat;
     /**
      * @inheritdoc
      */
@@ -28,10 +29,13 @@ class Posts extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['post_title', 'post_description', 'author_id'], 'required'],
+            [['post_title', 'post_description', 'author_id', 'password'], 'required'],
             [['post_description'], 'string'],
             [['author_id'], 'integer'],
             [['post_title'], 'string', 'max' => 100],
+            
+            
+            ['password', 'compare', 'compareAttribute' => 'password_repeat'],
         ];
     }
 
@@ -45,6 +49,8 @@ class Posts extends \yii\db\ActiveRecord
             'post_title' => 'Post Title',
             'post_description' => 'Post Description',
             'author_id' => 'Author ID',
+            'password' => 'Password',
+            'password_repeat' => 'Confirm Password',
         ];
     }
 }

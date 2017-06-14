@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\helpers\VarDumper;
 
 /**
  * PostsController implements the CRUD actions for Posts model.
@@ -94,8 +95,9 @@ class PostsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $requestPosts = Yii::$app->request->post();
+        if ($model->load($requestPosts) && $model->save()) {
+            Yii::info(VarDumper::dumpAsString($requestPosts['Posts']));
             return $this->redirect(['view', 'id' => $model->post_id]);
         } else {
             return $this->render('update', [
