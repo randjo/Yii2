@@ -63,6 +63,7 @@ class PostsController extends Controller
      */
     public function actionView($id)
     {
+        Yii::info(\yii\helpers\VarDumper::dumpAsString(1111));
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);

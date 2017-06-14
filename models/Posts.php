@@ -34,8 +34,8 @@ class Posts extends \yii\db\ActiveRecord
             [['author_id'], 'integer'],
             [['post_title'], 'string', 'max' => 100],
             
-            
-            ['password', 'compare', 'compareAttribute' => 'password_repeat'],
+            ['password_repeat', 'required'],
+            ['password', 'compare'],
         ];
     }
 
