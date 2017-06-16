@@ -11,6 +11,8 @@ use Yii;
  * @property string $post_title
  * @property string $post_description
  * @property integer $author_id
+ * @property string $password
+ * @property Comments[] $comments
  */
 class Posts extends \yii\db\ActiveRecord
 {
@@ -32,7 +34,7 @@ class Posts extends \yii\db\ActiveRecord
             [['post_title', 'post_description', 'author_id', 'password'], 'required'],
             [['post_description'], 'string'],
             [['author_id'], 'integer'],
-            [['post_title'], 'string', 'max' => 100],
+            [['post_title', 'password'], 'string', 'max' => 100],
             
             ['password_repeat', 'required'],
             ['password', 'compare'],
@@ -53,4 +55,12 @@ class Posts extends \yii\db\ActiveRecord
             'password_repeat' => 'Confirm Password',
         ];
     }
+    
+    /** 
+    * @return \yii\db\ActiveQuery 
+    */ 
+   public function getComments() 
+   { 
+       return $this->hasMany(Comments::className(), ['post_id' => 'post_id']); 
+   }
 }
