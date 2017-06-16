@@ -29,13 +29,13 @@ class Posts extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['post_title', 'post_description', 'author_id', 'password'], 'required'],
+            [['post_title', 'post_description', 'author_id'], 'required'],
             [['post_description'], 'string'],
             [['author_id'], 'integer'],
             [['post_title'], 'string', 'max' => 100],
             
-            ['password_repeat', 'required'],
-            ['password', 'compare'],
+            //['password_repeat', 'required'],
+            ['password', 'compare', 'skipOnEmpty' => true, 'compareAttribute' => 'password_repeat'],
         ];
     }
 

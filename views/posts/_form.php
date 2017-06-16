@@ -19,9 +19,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'author_id')->textInput() ?>
     
-    <?= $form->field($model, 'password')->textInput() ?>
+    <?= $form->field($model, 'password')->passwordInput(['value' => '']) ?>
     
-    <?= $form->field($model, 'password_repeat')->textInput() ?>
+    <?= $form->field($model, 'password_repeat')->passwordInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
