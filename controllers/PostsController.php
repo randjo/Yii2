@@ -9,7 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use yii\helpers\VarDumper;
+use app\models\CommentsSearch;
 
 /**
  * PostsController implements the CRUD actions for Posts model.
@@ -49,10 +49,15 @@ class PostsController extends Controller
     {
         $searchModel = new PostsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        
+        $searchModelComment = new CommentsSearch();
+        $dataProviderComment = $searchModelComment->search(Yii::$app->request->queryParams);
+//        $dataProviderComment->sort->sortParam = false;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'dataProviderComment' => $dataProviderComment,
         ]);
     }
 
