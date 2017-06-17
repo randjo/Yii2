@@ -6,8 +6,6 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PostsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-/* @var $searchModelComment app\models\PostsSearch */
-/* @var $dataProviderComment yii\data\ActiveDataProvider */
 
 $this->title = 'Posts';
 $this->params['breadcrumbs'][] = $this->title;
@@ -26,30 +24,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'post_id',
-            'post_title',
-            'post_description:ntext',
+            'id',
+            'title',
+            'description:ntext',
             'author_id',
 
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
-</div>
-
-<div class="comments-index">
-    <?= GridView::widget([
-        'dataProvider' => $dataProviderComment,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-            [
-                'label' => 'Title',
-                'attribute' => 'comment_title',
-                'encodeLabel' => true,
-            ],
-            [
-                'label' => 'Description',
-                'attribute' => 'comment_description',
-            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

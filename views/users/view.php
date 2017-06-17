@@ -2,17 +2,15 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use yii\widgets\ListView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Posts */
-/* @var $comments Comments[](ActiveDataProvider) */
+/* @var $model app\models\Users */
 
-$this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Posts', 'url' => ['index']];
+$this->title = $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="posts-view">
+<div class="users-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -31,20 +29,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'title',
-            'description:ntext',
-            'author_id',
+            'username',
+            'password',
         ],
     ]) ?>
 
-</div>
-
-<div>
-    <?php
-     foreach ($model->comments as $comment) {
-         echo Html::a(Html::encode($comment->title), ['comments/view', 'id' => $comment->id]) . '<br/>';
-         echo "Description: {$comment->description} <br/>";
-         echo '<hr/>';
-     }
-    ?>
 </div>

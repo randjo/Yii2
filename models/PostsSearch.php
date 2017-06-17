@@ -18,8 +18,8 @@ class PostsSearch extends Posts
     public function rules()
     {
         return [
-            [['post_id', 'author_id'], 'integer'],
-            [['post_title', 'post_description'], 'safe'],
+            [['id', 'author_id'], 'integer'],
+            [['title', 'description'], 'safe'],
         ];
     }
 
@@ -59,12 +59,12 @@ class PostsSearch extends Posts
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'post_id' => $this->post_id,
+            'id' => $this->id,
             'author_id' => $this->author_id,
         ]);
 
-        $query->andFilterWhere(['like', 'post_title', $this->post_title])
-            ->andFilterWhere(['like', 'post_description', $this->post_description]);
+        $query->andFilterWhere(['like', 'title', $this->title])
+            ->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;
     }

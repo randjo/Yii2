@@ -7,16 +7,16 @@ use Yii;
 /**
  * This is the model class for table "posts".
  *
- * @property integer $post_id
- * @property string $post_title
- * @property string $post_description
+ * @property integer $id
+ * @property string $title
+ * @property string $description
  * @property integer $author_id
- * @property string $password
+ *
  * @property Comments[] $comments
+ * @property Users $author
  */
 class Posts extends \yii\db\ActiveRecord
 {
-    public $password_repeat;
     /**
      * @inheritdoc
      */
@@ -31,13 +31,11 @@ class Posts extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['post_title', 'post_description', 'author_id'], 'required'],
-            [['post_description'], 'string'],
+            [['title', 'description', 'author_id'], 'required'],
+            [['description'], 'string'],
             [['author_id'], 'integer'],
-            [['post_title', 'password'], 'string', 'max' => 100],
-            
-            //['password_repeat', 'required'],
-            ['password', 'compare', 'skipOnEmpty' => true, 'compareAttribute' => 'password_repeat'],
+            [['title'], 'string', 'max' => 100],
+            [['author_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['author_id' => 'id']],
         ];
     }
 
@@ -47,20 +45,26 @@ class Posts extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'post_id' => 'Post ID',
-            'post_title' => 'Post Title',
-            'post_description' => 'Post Description',
+            'id' => 'ID',
+            'title' => 'Title',
+            'description' => 'Description',
             'author_id' => 'Author ID',
-            'password' => 'Password',
-            'password_repeat' => 'Confirm Password',
         ];
     }
-    
-    /** 
-    * @return \yii\db\ActiveQuery 
-    */ 
-   public function getComments() 
-   { 
-       return $this->hasMany(Comments::className(), ['post_id' => 'post_id']); 
-   }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getComments()
+    {
+        return $this->hasMany(Comments::className(), ['post_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAuthor()
+    {
+        return $this->hasOne(Users::className(), ['id' => 'author_id']);
+    }
 }

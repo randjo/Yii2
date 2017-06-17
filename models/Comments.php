@@ -7,10 +7,10 @@ use Yii;
 /**
  * This is the model class for table "comments".
  *
- * @property integer $comment_id
+ * @property integer $id
+ * @property string $title
+ * @property string $description
  * @property integer $post_id
- * @property string $comment_title
- * @property string $comment_description
  *
  * @property Posts $post
  */
@@ -30,11 +30,11 @@ class Comments extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['post_id'], 'required'],
+            [['title', 'description', 'post_id'], 'required'],
+            [['description'], 'string'],
             [['post_id'], 'integer'],
-            [['comment_description'], 'string'],
-            [['comment_title'], 'string', 'max' => 100],
-            [['post_id'], 'exist', 'skipOnError' => true, 'targetClass' => Posts::className(), 'targetAttribute' => ['post_id' => 'post_id']],
+            [['title'], 'string', 'max' => 100],
+            [['post_id'], 'exist', 'skipOnError' => true, 'targetClass' => Posts::className(), 'targetAttribute' => ['post_id' => 'id']],
         ];
     }
 
@@ -44,10 +44,10 @@ class Comments extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'comment_id' => 'Comment ID',
+            'id' => 'ID',
+            'title' => 'Title',
+            'description' => 'Description',
             'post_id' => 'Post ID',
-            'comment_title' => 'Comment Title',
-            'comment_description' => 'Comment Description',
         ];
     }
 
@@ -56,6 +56,6 @@ class Comments extends \yii\db\ActiveRecord
      */
     public function getPost()
     {
-        return $this->hasOne(Posts::className(), ['post_id' => 'post_id']);
+        return $this->hasOne(Posts::className(), ['id' => 'post_id']);
     }
 }

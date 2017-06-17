@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Comments;
+use app\models\Users;
 
 /**
- * CommentsSearch represents the model behind the search form about `app\models\Comments`.
+ * UsersSearch represents the model behind the search form about `app\models\Users`.
  */
-class CommentsSearch extends Comments
+class UsersSearch extends Users
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class CommentsSearch extends Comments
     public function rules()
     {
         return [
-            [['id', 'post_id'], 'integer'],
-            [['title', 'description'], 'safe'],
+            [['id'], 'integer'],
+            [['username', 'password'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class CommentsSearch extends Comments
      */
     public function search($params)
     {
-        $query = Comments::find();
+        $query = Users::find();
 
         // add conditions that should always apply here
 
@@ -60,11 +60,10 @@ class CommentsSearch extends Comments
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'post_id' => $this->post_id,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'description', $this->description]);
+        $query->andFilterWhere(['like', 'username', $this->username])
+            ->andFilterWhere(['like', 'password', $this->password]);
 
         return $dataProvider;
     }

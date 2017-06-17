@@ -8,7 +8,6 @@ use app\models\PostsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 use app\models\CommentsSearch;
 
 /**
@@ -22,16 +21,6 @@ class PostsController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['create', 'update'],
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ]
-                ],
-            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -49,15 +38,10 @@ class PostsController extends Controller
     {
         $searchModel = new PostsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        
-        $searchModelComment = new CommentsSearch();
-        $dataProviderComment = $searchModelComment->search(Yii::$app->request->queryParams);
-//        $dataProviderComment->sort->sortParam = false;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'dataProviderComment' => $dataProviderComment,
         ]);
     }
 
@@ -67,10 +51,10 @@ class PostsController extends Controller
      * @return mixed
      */
     public function actionView($id)
-    {
-        Yii::info(\yii\helpers\VarDumper::dumpAsString(1111));
+    {        
+        $model = $this->findModel($id);
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
@@ -84,7 +68,7 @@ class PostsController extends Controller
         $model = new Posts();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->post_id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -101,10 +85,9 @@ class PostsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $requestPosts = Yii::$app->request->post();
-        if ($model->load($requestPosts) && $model->save()) {
-            Yii::info(VarDumper::dumpAsString($requestPosts['Posts']));
-            return $this->redirect(['view', 'id' => $model->post_id]);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,

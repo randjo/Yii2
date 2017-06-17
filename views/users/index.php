@@ -1,28 +1,34 @@
 <?php
-/* @var users Users */
-$counter = 1;
-?>
-<div class="row">
-    <div class="col-lg-4">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Number</th>
-                    <th>Username</th>
-                </tr>
-            </thead>
-            <?php
-            foreach ($users as $user) { ?>
-            <tr>
-                <td><?= $counter; ?></td>
-                <td><?= $user->username; ?></td>
-            </tr>
-            <?php
-            $counter++;
-            }
-            ?>
-        </table>
-    </div>
-</div>
-<?php
 
+use yii\helpers\Html;
+use yii\grid\GridView;
+
+/* @var $this yii\web\View */
+/* @var $searchModel app\models\UsersSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
+
+$this->title = 'Users';
+$this->params['breadcrumbs'][] = $this->title;
+?>
+<div class="users-index">
+
+    <h1><?= Html::encode($this->title) ?></h1>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+
+    <p>
+        <?= Html::a('Create Users', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+
+            'id',
+            'username',
+            'password',
+
+            ['class' => 'yii\grid\ActionColumn'],
+        ],
+    ]); ?>
+</div>
