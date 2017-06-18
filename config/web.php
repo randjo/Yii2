@@ -53,6 +53,7 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '<site>/<hello>/<age:\d+>/<firstName:\w+>' => '<site>/<hello>',
             ],
         ],
     ],

@@ -125,8 +125,8 @@ class SiteController extends Controller
         return $this->render('about');
     }
     
-    public function actionHello($firstName, $lastName, $age) {
-        return $this->render('hello', compact('firstName', 'lastName', 'age'));
+    public function actionHello($age, $firstName = 'Rangel', $lastName = 'Marinov') {
+        return $this->render('hello', compact('age','firstName', 'lastName'));
     }
     
     public function actionUserForm()
